@@ -5,8 +5,12 @@ import fire from "./fire";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: [] }; // <- set up react state
+    this.state = { tasks: [], value: "" }; // <- set up react state
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   componentWillMount() {
     /* Create reference to messages in Firebase Database */
     let taskRef = fire
@@ -22,14 +26,37 @@ class App extends React.Component {
     });
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    fire
+      .database()
+      .ref("Tasks")
+      .push(this.state.value);
+    this.setState({ value: "" });
+  }
+
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+  }
   render() {
     return (
-      <ul>
-        <li>To Do</li>
-        {this.state.tasks.map(task => (
-          <li>{task}</li>
-        ))}
-      </ul>
+      <div>
+        <h1>To Do</h1>
+        <ul>
+          {this.state.tasks.map(task => (
+            <li key={task}>{task}</li>
+          ))}
+        </ul>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            placeholder="Add item..."
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+          <input type="submit" />
+        </form>
+      </div>
     );
   }
 }
