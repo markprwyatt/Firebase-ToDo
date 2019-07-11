@@ -1,6 +1,24 @@
 import React from "react";
 import "./App.css";
 import fire from "./fire";
+import ToDoList from "./components/ToDoList";
+import AddToDo from "./components/AddToDo";
+import TitleContainer from "./components/TitleContainer";
+
+import styled from "styled-components";
+
+const AppContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+  background-color: #3fbf7f;
+  height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+`;
 
 class App extends React.Component {
   constructor(props) {
@@ -40,38 +58,25 @@ class App extends React.Component {
     this.setState({ value: e.target.value });
   }
 
-  deleteTask(taskId) {
+  deleteTask = taskId => {
     const TasksRef = fire.database().ref(`/Tasks/${taskId}`);
     TasksRef.remove();
     this.setState({
       tasks: this.state.tasks.filter(task => Object.keys(task)[0] !== taskId)
     });
-  }
+  };
 
   render() {
     return (
-      <div>
-        <h1>To Do</h1>
-        <ul>
-          {this.state.tasks.map((task, i) => (
-            <div key={i}>
-              <li>{Object.values(task)}</li>
-              <button onClick={() => this.deleteTask(Object.keys(task)[0])}>
-                Delete
-              </button>
-            </div>
-          ))}
-        </ul>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            placeholder="Add item..."
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-          <input type="submit" />
-        </form>
-      </div>
+      <AppContainer>
+        <h1> To Do </h1>
+        <ToDoList tasks={this.state.tasks} deleteTask={this.deleteTask} />
+        <AddToDo
+          value={this.state.value}
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+        />
+      </AppContainer>
     );
   }
 }
