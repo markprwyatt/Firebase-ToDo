@@ -10,6 +10,7 @@ const ListItem = styled.div`
   border-radius: 15px;
   align-items: center;
   background-color: white;
+  transition: all 1s;
 
   & li {
     padding: 8px;
@@ -31,7 +32,15 @@ const Button = styled.i`
   }
 `;
 
+const H1 = styled.h1`
+  color: #fff;
+`;
+
 const ToDoList = ({ tasks, deleteTask }) => {
+  if (tasks.length < 1) {
+    return <H1>Completed it!</H1>;
+  }
+
   return (
     <StyledList>
       {tasks.map((task, i) => (

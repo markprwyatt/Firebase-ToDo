@@ -20,6 +20,9 @@ const AppContainer = styled.div`
   font-family: "Roboto", sans-serif;
 `;
 
+const H1 = styled.h1`
+  color: #fff;
+`;
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -69,7 +72,7 @@ class App extends React.Component {
   render() {
     return (
       <AppContainer>
-        <h1> To Do </h1>
+        <H1> To Do </H1>
         <ToDoList tasks={this.state.tasks} deleteTask={this.deleteTask} />
         <AddToDo
           value={this.state.value}
