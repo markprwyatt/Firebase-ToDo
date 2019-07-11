@@ -3,7 +3,6 @@ import "./App.css";
 import fire from "./fire";
 import ToDoList from "./components/ToDoList";
 import AddToDo from "./components/AddToDo";
-import TitleContainer from "./components/TitleContainer";
 
 import styled from "styled-components";
 
@@ -13,7 +12,12 @@ const AppContainer = styled.div`
   align-items: center;
   flex-direction: column;
   margin: 0 auto;
-  background-color: #3fbf7f;
+  background: rgb(63, 191, 112);
+  background: linear-gradient(
+    129deg,
+    rgba(63, 191, 112, 1) 0%,
+    rgba(8, 137, 93, 1) 100%
+  );
   height: 100vh;
   padding: 2rem;
   box-sizing: border-box;
